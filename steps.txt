@@ -21,6 +21,10 @@ Install go
 
 
 	export GOROOT=$HOME/go
-	export GOPATH=$HOME/go
-	export PATH=$PATH:$GOPATH/bin
+	export GOPATH=$HOME/projectsgo 
+	export PATH=$PATH:$GOROOT/bin
 
+	
+	go get -u --tags nopkcs11 github.com/hyperledger/fabric/core/chaincode/shim
+	go build --tags nopkcs11
+	sudo apt install libtool libltdl-dev
