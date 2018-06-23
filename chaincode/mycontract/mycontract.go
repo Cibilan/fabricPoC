@@ -170,7 +170,7 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 func (s *SmartContract) addCon(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 3 {
-		return shim.Error("Incorrect number of arguments. Expecting 4")
+		return shim.Error("Incorrect number of arguments. Expecting 3")
 	}
 
 	t := time.Now()
@@ -182,7 +182,10 @@ func (s *SmartContract) addCon(APIstub shim.ChaincodeStubInterface, args []strin
 
 	conAsBytes, _ := json.Marshal(contarct)
 
-	APIstub.PutState(args[0], conAsBytes)
+	err := APIstub.PutState(args[0], conAsBytes)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to record tuna catch: %s", args[0]))
+	}
 
 	return shim.Success(nil)
 }
