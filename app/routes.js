@@ -4,7 +4,7 @@ var tuna = require('./controller.js');
 
 module.exports = function(app){
   
-  app.get('/get_all_tuna', function(req, res){
-    tuna.get_all_tuna(req, res);
+  app.get('/get_all_con', function(req, res){
+    tuna.get_all_con(req, res);
   });
 }

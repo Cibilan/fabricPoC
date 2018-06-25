@@ -1,78 +1,75 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 <!DOCTYPE html>
-<html>
+<html >
   <head>
-    <title>Hyperledger Fabric Tuna Application</title>
+    <title>Hyperledger Fabric Application</title>
 
     <!-- require jquery and bootstrap scripts -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    
-    <!-- adding style here -->
-    <style type="text/css">
-      header{
-        background-color: lightgray;
-        font-size:20px;
-        padding:15px;
-      }
-      header, .form-group{
-        margin-bottom: 3%;
-      }
-      .form-group{
-        width:50%;
-      }
-      #body{
-        margin-left:3%;
-        margin-right:3%;
-      }
-      .form-control{
-        margin: 8px;
-      }
-      #right_header{
-        width:20%;
-        font-size:15px;
-        margin-right:0px;
-      }
-      #left_header{
-        margin-left:0;
-        width:40%;
-        display:inline-block;
-      } 
-      #id {
-        width:49%;
-        display: inline-block;
-      }
-      table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-      }
-      td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
-      }
-      tr:nth-child(even) {
-          background-color: #dddddd;
-      }
-    </style>
-  </head>
-  <body ng-app="application" ng-controller="appController">
-    <header>
-      <div id="left_header">Hyperledger Fabric Tuna Application</div>
-      <i id="right_header">Example Blockchain Application for Introduction to Hyperledger Fabric LFS171x</i>
-    </header>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <div id="body">
-      <div class="form-group">
-        <label>Query All Tuna Catches</label>
-        <p><input id="queryAllTuna" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllTuna()"></p>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+      <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+
+      <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+
+
+      <!-- requiring the angular page -->
+    <script type="text/javascript" src="app.js"> </script>
+
+  </head>
+  <body ng-app="application" ng-controller="appController" ng-cloak>
+   
+  <div id= "body"> 
+   <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()">
+        <md-tooltip>Menu</md-tooltip>
+        <md-icon md-svg-icon="img/icons/ic_menu_white_48px.svg"></md-icon>
+        </md-button>
+        <h2 class="md-toolbar-item md-breadcrumb md-headline ng-isolate-scope">
+            <span class="md-breadcrumb-page ng-binding"> HyperLegder Fabric PoC</span>
+        </h2>
+
+        <span flex></span>
+
+        <md-button class="md-raised md-accent" aria-label="Learn More" ng-click= "reload()">
+          Reload
+        </md-button>
+
+        <md-button class="md-icon-button md-accent" aria-label="Users" href="#/Login">
+          <md-icon md-svg-src="img/icons/ic_account_circle_white_48px.svg"></md-icon>
+          <md-tooltip>Select User</md-tooltip>
+        </md-button>
+        <div layout="row">
+          <h3 class="md-toolbar-item"> <span> User1 </span></h3>  
+        </div>
       </div>
- 
-      <table id="all_tuna" class="table" align="center">
+  </md-toolbar>
+
+
+<md-card layout-padding>
+  <md-card-header>
+    <md-card-header-text>
+      <span class="md-title">All Contracts</span>
+    </md-card-header-text>
+    <md-button id="queryAllCon"  ng-click="queryAllCon()" class="md-raised md-primary md-hue-1"> Query </md-button>
+  </md-card-header>
+
+      <table id="all_con" class="table" align="center">
 
         <tr>
           <th>ID</th>
@@ -82,17 +79,26 @@
           <th>stage</th>
         </tr>
 
-        <tr ng-repeat="tuna in all_tuna">
-          <td>{{tuna.Key}}</td>
-          <td>{{tuna.createdby}}</td>
-          <td>{{tuna.createdon}}</td>
-          <td>{{tuna.details}}</td>
-          <td>{{tuna.stage}}</td>
+        <tr ng-repeat="con in all_con">
+          <td>{{con.Key}}</td>
+          <td>{{con.createdby}}</td>
+          <td>{{con.createdon}}</td>
+          <td>{{con.details}}</td>
+          <td>{{con.stage}}</td>
         </tr>
       </table>
+    
 
-    </div>
-  </body>
-    <!-- requiring the angular page -->
-    <script type="text/javascript" src="app.js"> </script>
+<md-button class="md-fab md-fab-bottom-right docs-scroll-fab scrolling" docs-scroll-class="scrolling" ng-transclude="" aria-label="createOrder" href="#/createOrder">
+  <md-icon md-svg-src="img/icons/ic_add_white_48px.svg"></md-icon> 
+  <md-tooltip>Create new contract</md-tooltip> 
+</md-button>
+
+</md-card>
+
+
+ </div> 
+
+</body>
+
 </html>

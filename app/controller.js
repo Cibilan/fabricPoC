@@ -20,7 +20,7 @@ var os            = require('os');
 module.exports = (function() {
 
 return{
-		get_all_tuna: function(req, res){
+		get_all_con: function(req, res){
 		console.log("getting all tuna from database: ");
 
 		var fabric_client = new Fabric_Client();
@@ -62,10 +62,11 @@ return{
 				// queryAllCars chaincode function - requires no arguments , ex: args: [''],
 				const request = {
 					//targets : --- letting this default to the peers assigned to the channel
-					chaincodeId: 'tuna-app',
+					chaincodeId: 'con-app',
 					fcn: 'queryAllCon',
 					args: ['']
 				};
+
 
 				// send the query proposal to the peer
 				return channel.queryByChaincode(request);

@@ -2,7 +2,7 @@
 
 'use strict';
 
-var app = angular.module('application', []);
+var app = angular.module('application', ['ngMaterial']);
 
 // Angular Controller
 app.controller('appController', function($scope, appFactory){
@@ -12,9 +12,9 @@ app.controller('appController', function($scope, appFactory){
 	$("#error_holder").hide();
 	$("#error_query").hide();
 	
-	$scope.queryAllTuna = function(){
+	$scope.queryAllCon = function(){
 
-		appFactory.queryAllTuna(function(data){
+		appFactory.queryAllCon(function(data){
 		
 			var array = [];
 			for (var i = 0; i < data.length; i++){
@@ -24,7 +24,7 @@ app.controller('appController', function($scope, appFactory){
 			}
 
 			console.log(array);
-			$scope.all_tuna = array;
+			$scope.all_con = array;
 		});
 	}
 });
@@ -34,9 +34,9 @@ app.factory('appFactory', function($http){
 	
 	var factory = {};
 
-    factory.queryAllTuna = function(callback){
+    factory.queryAllCon = function(callback){
 
-    	$http.get('/get_all_tuna/').success(function(output){
+    	$http.get('/get_all_con/').success(function(output){
 			callback(output)
 		});
 	}
