@@ -123,7 +123,7 @@
     <md-steppers md-selected="stepper.selected" md-stretch-steppers="always">
         <md-step label="Contract Created" md-complete="stepper.step1Completed">
             <md-content layout="row">
-                <md-card flex="40" >
+                <md-card flex="30" >
                   <md-card-header>
                     <span class="md-title"> Steps</span>
                   </md-card-header>
@@ -133,7 +133,7 @@
                     </ol>
                   </md-card-content>
                 </md-card>
-                <md-card flex = "60">
+                <md-card flex = "70">
                   <md-card-title>
                     <span class="md-title">Transaction</span>
                   </md-card-title>
@@ -160,7 +160,7 @@
         </md-step>
         <md-step label="Contract Activation" md-complete="stepper.step2Completed" ng-disabled="stepper.disable">
             <md-content layout="row">
-                <md-card flex>
+                <md-card flex="30">
                   <md-card-header>
                     <span class="md-title"> Steps</span>
                   </md-card-header>
@@ -173,7 +173,7 @@
                     </ol>
                   </md-card-content>
                 </md-card>
-                <md-card flex>
+                <md-card flex="60">
                   <md-card-title>
                     <span class="md-title">Transaction</span>
                   </md-card-title>
@@ -200,7 +200,7 @@
         </md-step>
         <md-step label="Contract Signing" md-complete="stepper.step3Completed" ng-disabled="stepper.disable">
              <md-content layout="row">
-                <md-card flex>
+                <md-card flex="30">
                   <md-card-header>
                     <span class="md-title"> Steps</span>
                   </md-card-header>
@@ -210,7 +210,7 @@
                     </ol>
                   </md-card-content>
                 </md-card>
-                <md-card flex>
+                <md-card flex="70">
                   <md-card-title>
                     <span class="md-title">Transaction</span>
                   </md-card-title>
@@ -237,7 +237,7 @@
         </md-step>  
         <md-step label="Contract Validation" md-complete="stepper.step4Completed" ng-disabled="stepper.disable">
             <md-content layout="row">
-                <md-card flex>
+                <md-card flex="30">
                  <md-card-header>
                     <span class="md-title"> Steps</span>
                   </md-card-header>
@@ -248,7 +248,7 @@
                     </ol>
                   </md-card-content>
                 </md-card>
-                <md-card flex>
+                <md-card flex="70">
                   <md-card-title>
                     <span class="md-title">Transaction</span>
                   </md-card-title>
@@ -283,10 +283,100 @@
     <md-card-header-text>
       <span class="md-title"> Contract Details </span>
     </md-card-header-text>
-  </md-card-header>  
+  </md-card-header>
+<div layout="row" layout-align="center">  
+  <md-card-title >
+      <md-card-title-text> 
+        <span>Contract ID</span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.Key}} </span>
+      </md-card-title-text>
+  </md-card-title>  
+  <md-card-title >
+      <md-card-title-text> 
+        <span>Created By</span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.createdby}} </span>
+      </md-card-title-text>
+  </md-card-title> 
+    <md-card-title >
+      <md-card-title-text> 
+        <span>Created On</span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.createdon}} </span>
+      </md-card-title-text>
+  </md-card-title> 
+
+</div>
+
+<div layout="row" layout-align="center">  
+  </md-card-title> 
+    <md-card-title >
+      <md-card-title-text> 
+        <span>Current Stage</span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.stage}} </span>
+      </md-card-title-text>
+      </md-card-title> 
+      <md-card-title >
+      <md-card-title-text> 
+        <span> Condition</span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.condition}} </span>
+      </md-card-title-text>
+  </md-card-title>
+      <md-card-title >
+      <md-card-title-text> 
+        <span> Progress </span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.progress}} </span>
+      </md-card-title-text>
+    </md-card-title>
+          <md-card-title >
+      <md-card-title-text> 
+        <span> Validation </span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.validation}} </span>
+      </md-card-title-text>
+    </md-card-title>
+    
+</div>
+ 
+    <md-card-title >
+      <md-card-title-text flex="30"> 
+        <span> Details </span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.details}} </span>
+      </md-card-title-text>
+    </md-card-title>  
+    <md-card-title>
+      <md-card-title-text flex="30"> 
+        <span> Document Names</span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.docname}} </span>
+      </md-card-title-text>
+  </md-card-title>    
+    <md-card-title >
+      <md-card-title-text flex="30"> 
+        <span> Document Hash</span>
+      </md-card-title-text>
+      <md-card-title-text> 
+        <span class="md-subhead"> {{con.dochash}} </span>
+      </md-card-title-text>
+    </md-card-title>  
+   
 </md-card>  
 
-<!-- Add documents-->
+<!-- Add Parties-->
 <md-card>
 
 </md-card> 

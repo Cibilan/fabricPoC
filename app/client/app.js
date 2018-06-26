@@ -43,8 +43,8 @@ app.controller('appController', function($scope, appFactory){
 		var id = $scope.con_id;
 
 		appFactory.queryCon(id, function(data){
-			$scope.query_con = data;
-
+			$scope.con = data;
+			$scope.con.Key = $scope.con_id;
 
 			$scope.stepper = {
     		step1Completed : false,
