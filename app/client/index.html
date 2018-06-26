@@ -15,6 +15,7 @@
 
       <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <link rel="stylesheet" href="content/css/md-steppers.css">
 
       <!-- Angular Material requires Angular.js Libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
@@ -25,15 +26,18 @@
   <!-- Angular Material Library -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
 
+  <script src="md-steppers.js"></script>
+
 
 
       <!-- requiring the angular page -->
     <script type="text/javascript" src="app.js"> </script>
 
   </head>
+
   <body ng-app="application" ng-controller="appController" ng-cloak>
    
-  <div id= "body"> 
+  <div id= "body" style="width: 980px; margin: 0 auto"> 
    <md-toolbar>
       <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()">
@@ -60,16 +64,19 @@
       </div>
   </md-toolbar>
 
-
+<!--Query All Contracts -->
 <md-card layout-padding>
   <md-card-header>
     <md-card-header-text>
-      <span class="md-title">All Contracts</span>
+      <span class="md-title"> Query All Contracts</span>
     </md-card-header-text>
+  <md-card-actions layout="row" layout-align="end center">
     <md-button id="queryAllCon"  ng-click="queryAllCon()" class="md-raised md-primary md-hue-1"> Query </md-button>
+  </md-card-actions>  
   </md-card-header>
-
-      <table id="all_con" class="table" align="center">
+  <md-content>
+    <div ng-show="allcon">
+    <table id="all_con" class="table" align="center">
 
         <tr>
           <th>ID</th>
@@ -87,17 +94,209 @@
           <td>{{con.stage}}</td>
         </tr>
       </table>
-    
-
-<md-button class="md-fab md-fab-bottom-right docs-scroll-fab scrolling" docs-scroll-class="scrolling" ng-transclude="" aria-label="createOrder" href="#/createOrder">
-  <md-icon md-svg-src="img/icons/ic_add_white_48px.svg"></md-icon> 
-  <md-tooltip>Create new contract</md-tooltip> 
-</md-button>
-
+    </div>
+  </md-content>
 </md-card>
 
+<!--Query Single Contracts -->
+<md-card flex md-theme="default">
+    <md-card-header>
+    <md-card-header-text>
+      <span class="md-title"> Get Contract Details</span>
+    </md-card-header-text>
+      </md-card-header>
+    <md-content layout-padding>
+     
+     <md-input-container class="md-block">
+          <label>Contract ID</label>
+          <input ng-model="con_id" />
+      </md-input-container> 
+      <md-card-actions layout="row" layout-align="end center">
+    <md-button ng-click="queryCon()" class="md-raised md-primary md-hue-1"> Submit </md-button>
+  </md-card-actions>
 
- </div> 
+  </md-content> 
+  </md-card>  
+
+  <md-card flex>
+
+    <md-steppers md-selected="stepper.selected" md-stretch-steppers="always">
+        <md-step label="Contract Created" md-complete="stepper.step1Completed">
+            <md-content layout="row">
+                <md-card flex="40" >
+                  <md-card-header>
+                    <span class="md-title"> Steps</span>
+                  </md-card-header>
+                  <md-card-content>
+                    <ol>
+                      <li>Contract Created</li>
+                    </ol>
+                  </md-card-content>
+                </md-card>
+                <md-card flex = "60">
+                  <md-card-title>
+                    <span class="md-title">Transaction</span>
+                  </md-card-title>
+                  <md-card-content>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> </th>
+                            <th> User </th>
+                            <th> Description </th>
+                            <th> Timestamp </th>
+                          </tr>
+                        </thead>
+                        <tr ng-repeat="list in stage1 | orderBy : 'timestamp' ">
+                          <td> <md-icon style="color:green" md-svg-icon="img/icons/ic_done_black_16px.svg"></md-icon></td>
+                          <td>{{list.user}}</td>
+                          <td>{{list.transactionDescription}}</td>
+                          <td>{{ list.timestamp }}</td>
+                        </tr>
+                      </table>
+                  </md-card-content>
+                </md-card>
+            </md-content>
+        </md-step>
+        <md-step label="Contract Activation" md-complete="stepper.step2Completed" ng-disabled="stepper.disable">
+            <md-content layout="row">
+                <md-card flex>
+                  <md-card-header>
+                    <span class="md-title"> Steps</span>
+                  </md-card-header>
+                  <md-card-content>
+                    <ol>
+                      <li>Upload Documents</li>
+                      <li>Add Parties</li>
+                      <li>Add Condition</li>
+                      <li>Activate contract</li>
+                    </ol>
+                  </md-card-content>
+                </md-card>
+                <md-card flex>
+                  <md-card-title>
+                    <span class="md-title">Transaction</span>
+                  </md-card-title>
+                  <md-card-content>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> </th>
+                            <th> User </th>
+                            <th> Description </th>
+                            <th> Timestamp </th>
+                          </tr>
+                        </thead>
+                        <tr ng-repeat="list in stage2 | orderBy : 'timestamp' ">
+                          <td> <md-icon style="color:green" md-svg-icon="img/icons/ic_done_black_16px.svg"></md-icon></td>
+                          <td>{{list.user}}</td>
+                          <td>{{list.transactionDescription}}</td>
+                          <td>{{ list.timestamp }}</td>
+                        </tr>
+                      </table>
+                  </md-card-content>
+                </md-card>
+            </md-content>
+        </md-step>
+        <md-step label="Contract Signing" md-complete="stepper.step3Completed" ng-disabled="stepper.disable">
+             <md-content layout="row">
+                <md-card flex>
+                  <md-card-header>
+                    <span class="md-title"> Steps</span>
+                  </md-card-header>
+                  <md-card-content>
+                    <ol>
+                      <li>Parties Signing Contract</li>
+                    </ol>
+                  </md-card-content>
+                </md-card>
+                <md-card flex>
+                  <md-card-title>
+                    <span class="md-title">Transaction</span>
+                  </md-card-title>
+                  <md-card-content>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> </th>
+                            <th> User </th>
+                            <th> Description </th>
+                            <th> Timestamp </th>
+                          </tr>
+                        </thead>
+                        <tr ng-repeat="list in stage3 | orderBy : 'timestamp' ">
+                          <td> <md-icon style="color:green" md-svg-icon="img/icons/ic_done_black_16px.svg"></md-icon></td>
+                          <td>{{list.user}}</td>
+                          <td>{{list.transactionDescription}}</td>
+                          <td>{{ list.timestamp }}</td>
+                        </tr>
+                      </table>
+                  </md-card-content>
+                </md-card>
+            </md-content>
+        </md-step>  
+        <md-step label="Contract Validation" md-complete="stepper.step4Completed" ng-disabled="stepper.disable">
+            <md-content layout="row">
+                <md-card flex>
+                 <md-card-header>
+                    <span class="md-title"> Steps</span>
+                  </md-card-header>
+                  <md-card-content>
+                    <ol>
+                      <li>Contract Validation</li>
+
+                    </ol>
+                  </md-card-content>
+                </md-card>
+                <md-card flex>
+                  <md-card-title>
+                    <span class="md-title">Transaction</span>
+                  </md-card-title>
+                  <md-card-content>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> </th>
+                            <th> User </th>
+                            <th> Description </th>
+                            <th> Timestamp </th>
+                          </tr>
+                        </thead>
+                        <tr ng-repeat="list in stage4 | orderBy : 'timestamp' ">
+                          <td> <md-icon style="color:green" md-svg-icon="img/icons/ic_done_black_16px.svg"></md-icon></td>
+                          <td>{{list.user}}</td>
+                          <td>{{list.transactionDescription}}</td>
+                          <td>{{ list.timestamp }}</td>
+                        </tr>
+                      </table>
+                  </md-card-content>
+                </md-card>
+            </md-content>
+        </md-step>
+
+    </md-steppers>
+
+</md-card>
+<!-- Contract Details-->
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <span class="md-title"> Contract Details </span>
+    </md-card-header-text>
+  </md-card-header>  
+</md-card>  
+
+<!-- Add documents-->
+<md-card>
+
+</md-card> 
+
+</div>
+
+ <md-button class="md-fab md-fab-bottom-right docs-scroll-fab scrolling" docs-scroll-class="scrolling" aria-label="createOrder" href="#/createOrder">
+  <md-icon md-svg-src="img/icons/ic_add_white_48px.svg"></md-icon> 
+  <md-tooltip>Create new contract</md-tooltip> 
+</md-button>     
 
 </body>
 
