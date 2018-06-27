@@ -8,8 +8,12 @@ module.exports = function(app){
     tuna.get_all_con(req, res);
   });
 
-    app.get('/get_con/:id', function(req, res){
+  app.get('/get_con/:id', function(req, res){
     tuna.get_con(req, res);
+  });
+
+  app.get('/add_con/:newCon', function(req, res){
+    tuna.add_con(req, res);
   });
     
 }

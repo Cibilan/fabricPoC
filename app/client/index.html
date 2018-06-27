@@ -111,11 +111,12 @@
           <label>Contract ID</label>
           <input ng-model="con_id" />
       </md-input-container> 
-      <md-card-actions layout="row" layout-align="end center">
-    <md-button ng-click="queryCon()" class="md-raised md-primary md-hue-1"> Submit </md-button>
-  </md-card-actions>
+
 
   </md-content> 
+        <md-card-actions layout="row" layout-align="end center">
+    <md-button ng-click="queryCon()" class="md-raised md-primary md-hue-1"> Submit </md-button>
+  </md-card-actions>
   </md-card>  
 
   <md-card flex>
@@ -150,7 +151,7 @@
                         <tr ng-repeat="list in stage1 | orderBy : 'timestamp' ">
                           <td> <md-icon style="color:green" md-svg-icon="img/icons/ic_done_black_16px.svg"></md-icon></td>
                           <td>{{list.user}}</td>
-                          <td>{{list.transactionDescription}}</td>
+                          <td>{{list.details}}</td>
                           <td>{{ list.timestamp }}</td>
                         </tr>
                       </table>
@@ -190,7 +191,7 @@
                         <tr ng-repeat="list in stage2 | orderBy : 'timestamp' ">
                           <td> <md-icon style="color:green" md-svg-icon="img/icons/ic_done_black_16px.svg"></md-icon></td>
                           <td>{{list.user}}</td>
-                          <td>{{list.transactionDescription}}</td>
+                          <td>{{list.details}}</td>
                           <td>{{ list.timestamp }}</td>
                         </tr>
                       </table>
@@ -227,7 +228,7 @@
                         <tr ng-repeat="list in stage3 | orderBy : 'timestamp' ">
                           <td> <md-icon style="color:green" md-svg-icon="img/icons/ic_done_black_16px.svg"></md-icon></td>
                           <td>{{list.user}}</td>
-                          <td>{{list.transactionDescription}}</td>
+                          <td>{{list.details}}</td>
                           <td>{{ list.timestamp }}</td>
                         </tr>
                       </table>
@@ -265,7 +266,7 @@
                         <tr ng-repeat="list in stage4 | orderBy : 'timestamp' ">
                           <td> <md-icon style="color:green" md-svg-icon="img/icons/ic_done_black_16px.svg"></md-icon></td>
                           <td>{{list.user}}</td>
-                          <td>{{list.transactionDescription}}</td>
+                          <td>{{list.details}}</td>
                           <td>{{ list.timestamp }}</td>
                         </tr>
                       </table>
@@ -376,10 +377,95 @@
    
 </md-card>  
 
-<!-- Add Parties-->
+<!-- Add Contract-->
+<md-card>
+    <md-card-header>
+    <md-card-header-text>
+      <span class="md-title"> Add New Contract </span>
+      
+    </md-card-header-text>
+  </md-card-header>
+  <md-content layout-padding>
+      <md-input-container class="md-block">
+          <label>Contract ID</label>
+          <input ng-model="newCon.id" />
+      </md-input-container>
+      <md-input-container class="md-block">
+          <label> Contract Details</label>
+          <input ng-model="newCon.detail" />
+      </md-input-container>
+
+  </md-content>  
+      <md-card-actions layout="row" layout-align="end center">
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{new_Con_Success}}</h5>
+      <md-button ng-click="addCon()" class="md-raised md-primary md-hue-1"> Add Contract </md-button>
+      </md-card-actions>
+
+</md-card>
+
+<!-- Party List -->
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <span class="md-title"> Party List </span>      
+    </md-card-header-text>
+  </md-card-header>
+  <md-content layout-padding>
+    <table id="all_party" class="table" align="center">
+        <tr>
+          <th>Party Name</th>
+          <th>Mandantory</th>
+          <th>Weightage </th>
+        </tr>
+
+        <tr ng-repeat="party in all_party">
+          <td>{{party.name}}</td>
+          <td>{{party.mandatory}}</td>
+          <td>{{party.weight}}</td>          
+        </tr>
+      </table> 
+
+    </md-content>
+
+ </md-card>
+ 
+ <!-- Add Party -->
+ <md-card>    
+    <md-card-header>
+    <md-card-header-text>
+      <span class="md-title"> Add Party </span>      
+    </md-card-header-text>
+  </md-card-header>
+     <md-content layout-padding Layout="row" layout-align = "space-around center">
+     <md-input-container class="md-block">
+          <label>Party Name</label>
+          <input ng-model="newParty.name" />
+      </md-input-container> 
+      <md-input-container class="md-block">
+          <md-checkbox ng-model="newParty.mandatory" aria-label="Mandatory">
+            Mandatory: {{ newParty.mandatory }}
+          </md-checkbox>
+      </md-input-container> 
+      <md-input-container class="md-block">
+          <label> Weightage </label>
+          <input ng-model="newParty.mandatory" />
+      </md-input-container> 
+  
+    </md-content>
+
+    <md-card-actions layout="row" layout-align="end center">
+        
+      <md-button ng-click="addParty()" class="md-raised md-primary md-hue-1"> Add Party </md-button>
+    </md-card-actions>
+
+    <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{new_Con_Success}}</h5>
+</md-card> 
+
+
+ <!-- Add Document and Activate-->
 <md-card>
 
-</md-card> 
+</md-card>  
 
 </div>
 

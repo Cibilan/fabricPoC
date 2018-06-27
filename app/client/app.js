@@ -19,6 +19,8 @@ app.controller('appController', function($scope, appFactory){
 			$scope.stage4 = [];
 			$scope.stage5 = [];
 			$scope.stage6 = [];
+
+	$scope.user = "user1";		
 	
 	$scope.queryAllCon = function(){
 
@@ -42,11 +44,7 @@ app.controller('appController', function($scope, appFactory){
 
 		var id = $scope.con_id;
 
-		appFactory.queryCon(id, function(data){
-			$scope.con = data;
-			$scope.con.Key = $scope.con_id;
-
-			$scope.stepper = {
+		$scope.stepper = {
     		step1Completed : false,
     		step2Completed : false,
     		step3Completed : false,
@@ -54,54 +52,30 @@ app.controller('appController', function($scope, appFactory){
     		step5Completed : false,
     		step6Completed : false,
     		disable : false,
-    		selected : 2
-
+    		selected : 0
     		};
+    		delete $scope.con;	
 
-    		$scope.stage1 = [
-	    	{
-	    		"user": "User1",
-			"transactionDescription": "Created Contarct",
-			"timestamp": 1523336462000
-	    	}
+		appFactory.queryCon(id, function(data){
+			$scope.con = data;
+			$scope.con.Key = $scope.con_id;
 
-    		];
-
-				$scope.stage2 = [
-			{
-				"user": "User1",
-				"transactionDescription": "Upload Document",
-				"timestamp": 1523336462000
-			},
-			{
-				"user": "User1",
-				"transactionDescription": "Added Parties",
-				"timestamp": 1523336804000
-			},
-			{
-				"user": "User1",
-				"transactionDescription": "Added conditions",
-				"timestamp": 1523336964000
-			},
-			{
-				"user": "Smart Contarct",
-				"transactionDescription": "Contarct Activated",
-				"timestamp": 1523337176000
-			}
-			];
-
-			$scope.stage3 = [
-				{
-					"user": "User1",
-					"transactionDescription": "User1 Signed",
-					"timestamp": 1523339582000
-				},
-				{
-					"user": "User2",
-					"transactionDescription": "User2 Signed",
-					"timestamp": 1523339783000
+    		angular.forEach($scope.con.historylist, function(list){
+				if(list.stage == "Contract Created"){
+					$scope.stage1.push(list);	
 				}
-			];
+				if(list.stage == "Contract Activation"){
+					$scope.stage2.push(list);	
+				}
+				if(list.stage == "Contract Signing"){
+					$scope.stage3.push(list);	
+				}
+				if(list.stage == "Contract Validation"){
+					$scope.stage4.push(list);	
+				}
+			})
+
+			$scope.all_party = $scope.con.partylist;	
 
 			if ($scope.query_con == "Could not locate tuna"){
 				console.log()
@@ -109,6 +83,15 @@ app.controller('appController', function($scope, appFactory){
 			} else{
 				$("#error_query").hide();
 			}
+		});
+	}
+
+	$scope.addCon = function(){
+
+		$scope.newCon.user = $scope.user;
+		appFactory.addCon($scope.newCon, function(data){
+			$scope.new_Con_Success = data;
+			$("#success_create").show();
 		});
 	}
 });
@@ -127,6 +110,15 @@ app.factory('appFactory', function($http){
 
 	factory.queryCon = function(id, callback){
     	$http.get('/get_con/'+id).success(function(output){
+			callback(output)
+		});
+	}
+
+	factory.addCon = function(data, callback){
+
+		var con = data.id + "-" + data.detail + "-" + data.user;
+
+    	$http.get('/add_con/'+con).success(function(output){
 			callback(output)
 		});
 	}
