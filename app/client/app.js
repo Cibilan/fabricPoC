@@ -55,6 +55,12 @@ app.controller('appController', function($scope, appFactory){
     		selected : 0
     		};
     		delete $scope.con;	
+    	/*	delete $scope.stage1;
+    		delete $scope.stage2;
+    		delete $scope.stage3;
+    		delete $scope.stage4;
+    		delete $scope.all_party;*/
+
 
 		appFactory.queryCon(id, function(data){
 			$scope.con = data;

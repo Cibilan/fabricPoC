@@ -147,8 +147,8 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 				DocName: "contarct.pdf",
 				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
 				PartyList: []Party{
-						Party{Name: "User1", Mandatory: false, Signed: false, Weight: 1.0 },
-						Party{Name: "User2", Mandatory: true, Signed: false, Weight: 1.0 },
+						Party{Name: "user1", Mandatory: false, Signed: false, Weight: 1.0 },
+						Party{Name: "user2", Mandatory: true, Signed: false, Weight: 1.0 },
 					}, 
 				Condition: 2,
 				Progress: 0,
@@ -157,24 +157,24 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 				CreatedBy: "User1",
 				CreatedOn: "1504054225",
 				Details: "Test contract5",
-				Stage: "Contarct Validation",
+				Stage: "Contract Validation",
 				DocName: "contarct.pdf",
 				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
 				PartyList: []Party{
-						Party{Name: "User1", Mandatory: false, Signed: false, Weight: 1.0 },
-						Party{Name: "User2", Mandatory: true, Signed: false, Weight: 1.0 },
+						Party{Name: "user1", Mandatory: false, Signed: false, Weight: 1.0 },
+						Party{Name: "user2", Mandatory: true, Signed: false, Weight: 1.0 },
 					},
 				HistoryList: []History{
-						History{User: "User1", Stage: "Contract Created", Timestamp:"1504054225", Details:"Created new contract"},
-						History{User: "User1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User1 added"},
-						History{User: "User1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User2 added"},
-						History{User: "User1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User3 added"},
-						History{User: "User1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User4 added"},
-						History{User: "User1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Document, condition and activation"},
-						History{User: "User1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User1 Signed"},
-						History{User: "User2", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User2 Signed"},
-						History{User: "User1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User3 Signed"},
-						History{User: "User1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User4 Signed"},
+						History{User: "user1", Stage: "Contract Created", Timestamp:"1504054225", Details:"Created new contract"},
+						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User1 added"},
+						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User2 added"},
+						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User3 added"},
+						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User4 added"},
+						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Document, condition and activation"},
+						History{User: "user1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User1 Signed"},
+						History{User: "user2", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User2 Signed"},
+						History{User: "user1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User3 Signed"},
+						History{User: "user1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User4 Signed"},
 						History{User: "SmartContract", Stage: "Contract Validation", Timestamp:"1504054225", Details:"Contarct Validated"},
 					},	 
 				Condition: 2,
@@ -205,7 +205,7 @@ func (s *SmartContract) addCon(APIstub shim.ChaincodeStubInterface, args []strin
 	timestamp := strconv.FormatInt(t.Unix() , 10)
 
 	var contarct = Contract{CreatedBy: args[1], CreatedOn: timestamp, Details: args[2], Stage: "Contarct Created", Validation: false,
-					HistoryList: []History{ History{User: args[1], Stage: "Contract created", Timestamp: timestamp , Details: "New contract created" }}}
+					HistoryList: []History{ History{User: args[1], Stage: "Contract Created", Timestamp: timestamp , Details: "New contract created" }}}
 
 	conAsBytes, _ := json.Marshal(contarct)
 
