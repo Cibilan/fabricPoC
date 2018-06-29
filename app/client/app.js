@@ -44,6 +44,8 @@ app.controller('appController', function($scope, appFactory){
 
 		var id = $scope.con_id;
 
+		
+
 		$scope.stepper = {
     		step1Completed : false,
     		step2Completed : false,
@@ -54,17 +56,26 @@ app.controller('appController', function($scope, appFactory){
     		disable : false,
     		selected : 0
     		};
-    		delete $scope.con;	
-    	/*	delete $scope.stage1;
-    		delete $scope.stage2;
-    		delete $scope.stage3;
-    		delete $scope.stage4;
-    		delete $scope.all_party;*/
+    		
 
 
 		appFactory.queryCon(id, function(data){
+			delete $scope.con;	
+    		delete $scope.stage1;
+    		delete $scope.stage2;
+    		delete $scope.stage3;
+    		delete $scope.stage4;
+    		delete $scope.all_party;
+
+    		console.log(data);
+
 			$scope.con = data;
 			$scope.con.Key = $scope.con_id;
+			$scope.stage1 = [];
+			$scope.stage2 = [];
+			$scope.stage3 = [];
+			$scope.stage4 = [];
+			$scope.all_party = [];
 
     		angular.forEach($scope.con.historylist, function(list){
 				if(list.stage == "Contract Created"){
@@ -97,9 +108,18 @@ app.controller('appController', function($scope, appFactory){
 		$scope.newCon.user = $scope.user;
 		appFactory.addCon($scope.newCon, function(data){
 			$scope.new_Con_Success = data;
-			$("#success_create").show();
 		});
 	}
+
+	$scope.addParty = function(){
+		$scope.newParty.user = $scope.user;
+		$scope.newParty.key = $scope.con_id;
+		console.log($scope.newParty);
+		appFactory.addParty($scope.newParty, function(data){
+			$scope.new_Party_Success = data;
+		});
+	}
+
 });
 
 // Angular Factory
@@ -125,6 +145,17 @@ app.factory('appFactory', function($http){
 		var con = data.id + "-" + data.detail + "-" + data.user;
 
     	$http.get('/add_con/'+con).success(function(output){
+			callback(output)
+		});
+	}
+
+	factory.addParty = function(data, callback){
+
+		var newParty = data.key + "-" + data.partyName + "-" + data.mandatory  + "-" + data.user;
+
+		console.log(newParty);
+
+    	$http.get('/add_party/'+newParty).success(function(output){
 			callback(output)
 		});
 	}

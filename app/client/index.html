@@ -50,7 +50,7 @@
 
         <span flex></span>
 
-        <md-button class="md-raised md-accent" aria-label="Learn More" ng-click= "reload()">
+        <md-button class="md-raised md-accent" aria-label="Learn More" ng-click= "queryCon()">
           Reload
         </md-button>
 
@@ -402,10 +402,10 @@
       </md-input-container>
 
   </md-content>  
-      <md-card-actions layout="row" layout-align="end center">
-        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{new_Con_Success}}</h5>
+      <md-card-actions layout="row" layout-align="space-between center">
+        <h5 style="color:green;margin-bottom:2%"> {{new_Con_Success}}</h5>
       <md-button ng-click="addCon()" class="md-raised md-primary md-hue-1"> Add Contract </md-button>
-      </md-card-actions>
+    </md-card-actions>
 
 </md-card>
 
@@ -445,11 +445,11 @@
      <md-content layout-padding Layout="row" layout-align = "space-around center">
      <md-input-container class="md-block">
           <label>Party Name</label>
-          <input ng-model="newParty.name" />
+          <input ng-model="newParty.partyName" />
       </md-input-container> 
       <md-input-container class="md-block">
           <md-checkbox ng-model="newParty.mandatory" aria-label="Mandatory">
-            Mandatory: {{ newParty.mandatory }}
+            Mandatory: {{newParty.mandatory}}
           </md-checkbox>
       </md-input-container> 
 
@@ -465,7 +465,7 @@
       <md-button ng-click="addParty()" class="md-raised md-primary md-hue-1"> Add Party </md-button>
     </md-card-actions>
 
-    <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{new_Con_Success}}</h5>
+    <h5 style="color:green;margin-bottom:2%" > {{new_Party_Success}}</h5>
 
 
 </md-card> 

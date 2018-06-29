@@ -15,5 +15,9 @@ module.exports = function(app){
   app.get('/add_con/:newCon', function(req, res){
     tuna.add_con(req, res);
   });
+
+  app.get('/add_party/:newParty', function(req, res){
+    tuna.add_party(req, res);
+  });
     
 }
