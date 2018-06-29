@@ -72,7 +72,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
         //targets : --- letting this default to the peers assigned to the channel
         chaincodeId: 'con-app',
         fcn: 'addParty',
-        args: ['CON5', 'user2', 'false'],
+        args: ['CON0', 'user1', 'false', 'user1'],
         chainId: 'mychannel',
         txId: tx_id
     };

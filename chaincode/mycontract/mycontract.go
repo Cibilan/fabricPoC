@@ -110,13 +110,13 @@ func (s *SmartContract) queryCon(APIstub shim.ChaincodeStubInterface, args []str
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	contracts := []Contract{
 			Contract {
-				CreatedBy: "User1",
+				CreatedBy: "user1",
 				CreatedOn: "1504054225",
 				Details: "Test contract",
 				Stage: "Contract Created",
 				Validation: false },
 			Contract {
-				CreatedBy: "User1",
+				CreatedBy: "user1",
 				CreatedOn: "1504054225",
 				Details: "Test contract2",
 				Stage: "Contract Activation",
@@ -124,7 +124,7 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
 				Validation: false },
 			Contract {
-				CreatedBy: "User1",
+				CreatedBy: "user1",
 				CreatedOn: "1504054225",
 				Details: "Test contract3",
 				Stage: "Contract Signing",
@@ -132,7 +132,7 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
 				Validation: false },
 			Contract {
-				CreatedBy: "User1",
+				CreatedBy: "user1",
 				CreatedOn: "1504054225",
 				Details: "Test contract3",
 				Stage: "Contract Validation",
@@ -140,7 +140,7 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
 				Validation: true },
 			Contract {
-				CreatedBy: "User1",
+				CreatedBy: "user1",
 				CreatedOn: "1504054225",
 				Details: "Test contract4",
 				Stage: "Contract Activation",
@@ -154,7 +154,7 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 				Progress: 0,
 				Validation: false },
 			Contract {
-				CreatedBy: "User1",
+				CreatedBy: "user1",
 				CreatedOn: "1504054225",
 				Details: "Test contract5",
 				Stage: "Contract Validation",
@@ -204,14 +204,14 @@ func (s *SmartContract) addCon(APIstub shim.ChaincodeStubInterface, args []strin
 
 	timestamp := strconv.FormatInt(t.Unix() , 10)
 
-	var contarct = Contract{CreatedBy: args[1], CreatedOn: timestamp, Details: args[2], Stage: "Contarct Created", Validation: false,
+	var contarct = Contract{CreatedBy: args[1], CreatedOn: timestamp, Details: args[2], Stage: "Contract Created", Validation: false,
 					HistoryList: []History{ History{User: args[1], Stage: "Contract Created", Timestamp: timestamp , Details: "New contract created" }}}
 
 	conAsBytes, _ := json.Marshal(contarct)
 
 	err := APIstub.PutState(args[0], conAsBytes)
 	if err != nil {
-		return shim.Error(fmt.Sprintf("Failed to record tuna catch: %s", args[0]))
+		return shim.Error(fmt.Sprintf("Failed to record new contract: %s", args[0]))
 	}
 
 	return shim.Success(nil)
@@ -219,7 +219,7 @@ func (s *SmartContract) addCon(APIstub shim.ChaincodeStubInterface, args []strin
 
 func (s *SmartContract) addParty(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 3 {
+	if len(args) != 4 {
 		return shim.Error("Incorrect number of arguments. Expecting 3")
 	}
 
@@ -241,14 +241,14 @@ func (s *SmartContract) addParty(APIstub shim.ChaincodeStubInterface, args []str
 
 	contract.PartyList = append(contract.PartyList, party1)
 
-	history1 := History{User: "user1", Stage: "Contarct Activation", Timestamp: timestamp, Details: "Added Parties" }
+	history1 := History{User: args[3], Stage: "Contract Activation", Timestamp: timestamp, Details: "Added Parties" }
 
 	contract.HistoryList = append(contract.HistoryList, history1)
 
 	conAsBytes, _ = json.Marshal(contract)
 	APIstub.PutState(args[0], conAsBytes)
 
-	fmt.Println("updated", contract)
+	fmt.Println("contract updated", contract)
 	return shim.Success(nil)
 }
 
@@ -261,7 +261,7 @@ func (s *SmartContract) conAct(APIstub shim.ChaincodeStubInterface, args []strin
 
 	timestamp := strconv.FormatInt(t.Unix() , 10)
 
-	if len(args) != 3 {
+	if len(args) != 5 {
 		return shim.Error("Incorrect number of arguments. Expecting 3")
 	}
 
@@ -277,13 +277,21 @@ func (s *SmartContract) conAct(APIstub shim.ChaincodeStubInterface, args []strin
 
 	contract.Condition = condition
 
-	stage = "Contarct Signing"
+	stage = "Contract Signing"
 
 	contract.Stage = stage
 
-	history1 := History{User: args[1], Stage: "Contarct Activation", Timestamp: timestamp, Details: "Contarct Activated for signing" }
+	contract.DocName = args[3]
+
+	contract.DocHash = args[4] 
+
+	history1 := History{User: args[1], Stage: "Contract Activation", Timestamp: timestamp, Details: "Contarct Activated for signing" }
 
 	contract.HistoryList = append(contract.HistoryList, history1)
+
+	history2 := History{User: args[1], Stage: "Contract Activation", Timestamp: timestamp, Details: "Document inforamtion added" }
+
+	contract.HistoryList = append(contract.HistoryList, history2)
 
 	conAsBytes, _ = json.Marshal(contract)
 	APIstub.PutState(args[0], conAsBytes)
@@ -317,14 +325,14 @@ func (s *SmartContract) conSign(APIstub shim.ChaincodeStubInterface, args []stri
 		if party.Name == args[1] {
 			if party.Signed == false {
 				contract.PartyList[i].Signed = true
-				history1 = History{User: args[1], Stage: "Contarct Signing", Timestamp: timestamp, Details: "Party Signed" }
+				history1 = History{User: args[1], Stage: "Contract Signing", Timestamp: timestamp, Details: "Party Signed" }
 				break
 			} else {
-				history1 = History{User: args[1], Stage: "Contarct Signing", Timestamp: timestamp, Details: "Already signed" }
+				history1 = History{User: args[1], Stage: "Contract Signing", Timestamp: timestamp, Details: "Already signed" }
 				break
 			}
 		} else {
-			history1 = History{User: args[1], Stage: "Contarct Signing", Timestamp: timestamp, Details: "Party not authorized" }	
+			history1 = History{User: args[1], Stage: "Contract Signing", Timestamp: timestamp, Details: "Party not authorized" }	
 		}
 	}
 	
@@ -346,16 +354,16 @@ func (s *SmartContract) conSign(APIstub shim.ChaincodeStubInterface, args []stri
 	contract.Progress = count
 
 	if contract.Validation == true{
-		history2 = History{User: "Smart Contarct", Stage: "Contarct Validation", Timestamp: timestamp, Details: "Contract valid" }		
+		history2 = History{User: "Smart Contract", Stage: "Contract Validation", Timestamp: timestamp, Details: "Contract valid" }		
 
 	}else if manFlag == true {
-		history2 = History{User: "Smart Contarct", Stage: "Contarct Validation", Timestamp: timestamp, Details: "Mandatory condition not satisfied" }	
+		history2 = History{User: "Smart Contract", Stage: "Contract Validation", Timestamp: timestamp, Details: "Mandatory condition not satisfied" }	
 	}else if count < contract.Condition {
-		history2 = History{User: "Smart Contarct", Stage: "Contarct Validation", Timestamp: timestamp, Details: "Party condition not satisfied" }
+		history2 = History{User: "Smart Contract", Stage: "Contract Validation", Timestamp: timestamp, Details: "Party condition not satisfied" }
 	}else {
 		contract.Validation = true
-		contract.Stage = "Contarct Validation"
-		history2 = History{User: "Smart Contarct", Stage: "Contarct Validation", Timestamp: timestamp, Details: "Condition satisfied" }
+		contract.Stage = "Contract Validation"
+		history2 = History{User: "Smart Contract", Stage: "Contract Validation", Timestamp: timestamp, Details: "Condition satisfied" }
 	}
 
 	contract.HistoryList = append(contract.HistoryList, history2)
@@ -388,7 +396,7 @@ func (s *SmartContract) conDoc(APIstub shim.ChaincodeStubInterface, args []strin
 
 	contract.DocHash = args[3] 
 
-	history1 := History{User: args[1], Stage: "Contarct Activation", Timestamp: timestamp, Details: "Document inforamtion added" }
+	history1 := History{User: args[1], Stage: "Contract Activation", Timestamp: timestamp, Details: "Document inforamtion added" }
 
 	contract.HistoryList = append(contract.HistoryList, history1)
 
