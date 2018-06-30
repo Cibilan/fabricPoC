@@ -237,7 +237,7 @@ func (s *SmartContract) addParty(APIstub shim.ChaincodeStubInterface, args []str
 
 	b,_ := strconv.ParseBool(args[2])
 
-	stage = "Contract Activation"
+	stage := "Contract Activation"
 
 	contract.Stage = stage
 

@@ -5,7 +5,7 @@
 var app = angular.module('application', ['ngMaterial','md-steppers']);
 
 // Angular Controller
-app.controller('appController', function($scope, appFactory){
+app.controller('appController', function($scope, appFactory, $mdDialog){
 
 	$("#success_holder").hide();
 	$("#success_create").hide();
@@ -91,7 +91,7 @@ app.controller('appController', function($scope, appFactory){
 
 			$scope.all_party = $scope.con.partylist;	
 
-			if ($scope.query_con == "Could not locate tuna"){
+			if ($scope.query_con == "Could not locate Contract"){
 				console.log()
 				$("#error_query").show();
 			} else{
@@ -100,13 +100,14 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
-	$scope.addCon = function(){
+	// $scope.addCon = function(){
 
-		$scope.newCon.user = $scope.user;
-		appFactory.addCon($scope.newCon, function(data){
-			$scope.new_Con_Success = data;
-		});
-	}
+	// 	$scope.newCon.user = $scope.user;
+	// 	console.log($scope.newCon);
+	// 	appFactory.addCon($scope.newCon, function(data){
+	// 		$scope.new_Con_Success = data;
+	// 	});
+	// }
 
 	$scope.addParty = function(){
 		$scope.newParty.user = $scope.user;
@@ -138,6 +139,26 @@ app.controller('appController', function($scope, appFactory){
 			$scope.partySign_Success = data;
 		});
 	}
+
+	$scope.showPrompt = function(ev) {
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'views/createContract.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true,
+    })
+  };
+
+   function DialogController($scope, $mdDialog) {
+    $scope.addCon1 = function(){
+		$scope.newCon.user = "user1";
+		console.log($scope.newCon);
+		appFactory.addCon($scope.newCon, function(data){
+			$scope.new_Con_Success = data;
+		});
+	}
+  }
 
 });
 

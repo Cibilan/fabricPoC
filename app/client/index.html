@@ -469,7 +469,7 @@
 </md-card>  
 
 <!-- Add Contract-->
-<md-card>
+<!-- <md-card>
     <md-card-header>
     <md-card-header-text>
       <span class="md-title"> Add New Contract </span>
@@ -492,7 +492,7 @@
       <md-button ng-click="addCon()" class="md-raised md-primary md-hue-1"> Add Contract </md-button>
     </md-card-actions>
 
-</md-card>
+</md-card> -->
 
 <!-- Party List -->
 <md-card>
@@ -615,6 +615,7 @@
             <p>{{ party.signed }}</p>
             <p> {{ party.weight }} </p>
             <md-checkbox ng-model="sign.selected" ></md-checkbox>
+          </md-list-item>
       </md-list>  
   </md-content>  
   <md-card-actions layout="row" layout-align="space-between center">      
@@ -626,10 +627,14 @@
 
 </div>
 
- <md-button class="md-fab md-fab-bottom-right docs-scroll-fab scrolling" docs-scroll-class="scrolling" aria-label="createOrder" href="#/createOrder">
+<div>
+ <md-button class="md-fab md-fab-bottom-right docs-scroll-fab scrolling" docs-scroll-class="scrolling" ng-transclude="" aria-label="createOrder" ng-click="showPrompt($event)">
   <md-icon md-svg-src="img/icons/ic_add_white_48px.svg"></md-icon> 
-  <md-tooltip>Create new contract</md-tooltip> 
-</md-button>     
+  <md-tooltip>Create new Contract</md-tooltip> 
+</md-button>
+
+
+</div>   
 
 </body>
 

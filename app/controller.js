@@ -21,7 +21,7 @@ module.exports = (function() {
 
 return{
 		get_all_con: function(req, res){
-		console.log("getting all tuna from database: ");
+		console.log("getting all contarct from database: ");
 
 		var fabric_client = new Fabric_Client();
 
@@ -126,7 +126,6 @@ return{
 		        throw new Error('Failed to get user1.... run registerUser.js');
 		    }
 
-		    // queryTuna - requires 1 argument, ex: args: ['4'],
 		    const request = {
 		        txId: tx_id,
 		        chaincodeId: 'con-app',
@@ -142,7 +141,7 @@ return{
 		    if (query_responses && query_responses.length == 1) {
 		        if (query_responses[0] instanceof Error) {
 		            console.error("error from query = ", query_responses[0]);
-		            res.send("Could not locate tuna")
+		            res.send("Could not locate contract")
 		            
 		        } else {
 		            console.log("Response is ", query_responses[0].toString());
@@ -150,7 +149,7 @@ return{
 		        }
 		    } else {
 		        console.log("No payloads were returned from query");
-		        res.send("Could not locate tuna")
+		        res.send("Could not locate contract")
 		    }
 		}).catch((err) => {
 		    console.error('Failed to query successfully :: ' + err);
@@ -211,8 +210,7 @@ return{
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'], 
-		    // send proposal to endorser
+		    
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
 		        chaincodeId: 'con-app',
@@ -372,8 +370,7 @@ return{
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'], 
-		    // send proposal to endorser
+		   
 			const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
 		        chaincodeId: 'con-app',
@@ -535,8 +532,7 @@ return{
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'], 
-		    // send proposal to endorser
+		    
 			const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
 		        chaincodeId: 'con-app',
@@ -696,8 +692,7 @@ return{
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'], 
-		    // send proposal to endorser
+		    
 			const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
 		        chaincodeId: 'con-app',
