@@ -19,5 +19,13 @@ module.exports = function(app){
   app.get('/add_party/:newParty', function(req, res){
     tuna.add_party(req, res);
   });
+
+    app.get('/con_act/:conAct', function(req, res){
+    tuna.con_act(req, res);
+  });
+
+  app.get('/con_sign/:conSign', function(req, res){
+    tuna.con_sign(req, res);
+  });
     
 }

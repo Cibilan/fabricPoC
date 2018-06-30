@@ -42,9 +42,7 @@ app.controller('appController', function($scope, appFactory){
 
 	$scope.queryCon = function(){
 
-		var id = $scope.con_id;
-
-		
+		var id = $scope.con_id;		
 
 		$scope.stepper = {
     		step1Completed : false,
@@ -55,8 +53,7 @@ app.controller('appController', function($scope, appFactory){
     		step6Completed : false,
     		disable : false,
     		selected : 0
-    		};
-    		
+    		};  		
 
 
 		appFactory.queryCon(id, function(data){
@@ -120,6 +117,28 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	$scope.conAct = function(){
+
+		$scope.act.fileName = angular.element('#fileName')[0].value;
+		$scope.act.fileHash = angular.element('#fileHash')[0].value;
+		$scope.act.user = $scope.user;
+		$scope.act.key = $scope.con_id;
+		console.log($scope.act);
+		appFactory.conAct($scope.act, function(data){
+			$scope.new_conAct_Success = data;
+		});
+
+	}
+
+	$scope.conSign = function(){
+		$scope.conSign.user = $scope.user;
+		$scope.conSign.key = $scope.con_id;
+		console.log($scope.conSign);
+		appFactory.conSign($scope.conSign, function(data){
+			$scope.partySign_Success = data;
+		});
+	}
+
 });
 
 // Angular Factory
@@ -156,6 +175,28 @@ app.factory('appFactory', function($http){
 		console.log(newParty);
 
     	$http.get('/add_party/'+newParty).success(function(output){
+			callback(output)
+		});
+	}
+
+	factory.conAct = function(data, callback){
+
+		var conAct = data.key + "-" + data.fileName + "-" + data.fileHash + "-" + data.condition + "-" + data.user;
+
+		console.log(conAct);
+
+    	$http.get('/con_act/'+conAct).success(function(output){
+			callback(output)
+		});
+	}
+
+	factory.conSign = function(data, callback){
+
+		var conSign = data.key + "-" + data.user;
+
+		console.log(conSign);
+
+    	$http.get('/con_sign/'+conSign).success(function(output){
 			callback(output)
 		});
 	}
