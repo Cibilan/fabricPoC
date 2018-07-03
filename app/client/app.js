@@ -12,7 +12,7 @@ app.controller('appController', function($scope, appFactory, $mdDialog){
 	$("#error_holder").hide();
 	$("#error_query").hide();
 
-				$scope.stepper = {};
+			$scope.stepper = {};
 			$scope.stage1 = [];
 			$scope.stage2 = [];
 			$scope.stage3 = [];
@@ -53,7 +53,8 @@ app.controller('appController', function($scope, appFactory, $mdDialog){
     		step6Completed : false,
     		disable : false,
     		selected : 0
-    		};  		
+    		};
+    	$scope.conHome = true;	  		
 
 
 		appFactory.queryCon(id, function(data){
@@ -63,6 +64,11 @@ app.controller('appController', function($scope, appFactory, $mdDialog){
     		delete $scope.stage3;
     		delete $scope.stage4;
     		delete $scope.all_party;
+    		delete $scope.new_Party_Success;
+    		delete $scope.newParty;
+    		delete $scope.act;
+    		delete $scope.new_conAct_Success;
+    		  
 
     		console.log(data);
 
@@ -73,6 +79,10 @@ app.controller('appController', function($scope, appFactory, $mdDialog){
 			$scope.stage3 = [];
 			$scope.stage4 = [];
 			$scope.all_party = [];
+
+			console.log($scope.con);
+
+			$scope.conDetail = true;
 
     		angular.forEach($scope.con.historylist, function(list){
 				if(list.stage == "Contract Created"){
@@ -89,6 +99,26 @@ app.controller('appController', function($scope, appFactory, $mdDialog){
 				}
 			})
 
+				if($scope.con.stage == "Contract Created"){
+					
+					$scope.showSign = false;
+					$scope.showParty = true;
+				}
+				if($scope.con.stage == "Contract Activation"){
+					$scope.showParty = true;
+					
+					$scope.showSign = false;
+				}
+				if($scope.con.stage == "Contract Signing"){
+					$scope.showSign = true;
+					$scope.showParty = false;
+					
+				}
+				if($scope.con.stage == "Contract Validation"){
+					$scope.showSign = true;
+					$scope.showParty = false;
+					
+				}
 			$scope.all_party = $scope.con.partylist;	
 
 			if ($scope.query_con == "Could not locate Contract"){
@@ -140,6 +170,7 @@ app.controller('appController', function($scope, appFactory, $mdDialog){
 		});
 	}
 
+
 	$scope.showPrompt = function(ev) {
     $mdDialog.show({
       controller: DialogController,
@@ -148,7 +179,7 @@ app.controller('appController', function($scope, appFactory, $mdDialog){
       targetEvent: ev,
       clickOutsideToClose:true,
     })
-  };
+  	};
 
    function DialogController($scope, $mdDialog) {
     $scope.addCon1 = function(){
@@ -157,8 +188,8 @@ app.controller('appController', function($scope, appFactory, $mdDialog){
 		appFactory.addCon($scope.newCon, function(data){
 			$scope.new_Con_Success = data;
 		});
-	}
-  }
+		}
+  	}
 
 });
 

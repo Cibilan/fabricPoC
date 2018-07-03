@@ -111,71 +111,31 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 	contracts := []Contract{
 			Contract {
 				CreatedBy: "user1",
-				CreatedOn: "1504054225",
-				Details: "Test contract",
-				Stage: "Contract Created",
-				Validation: false },
-			Contract {
-				CreatedBy: "user1",
-				CreatedOn: "1504054225",
-				Details: "Test contract2",
-				Stage: "Contract Activation",
-				DocName: "contarct.pdf",
-				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
-				Validation: false },
-			Contract {
-				CreatedBy: "user1",
-				CreatedOn: "1504054225",
-				Details: "Test contract3",
-				Stage: "Contract Signing",
-				DocName: "contarct.pdf",
-				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
-				Validation: false },
-			Contract {
-				CreatedBy: "user1",
-				CreatedOn: "1504054225",
-				Details: "Test contract3",
-				Stage: "Contract Validation",
-				DocName: "contarct.pdf",
-				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
-				Validation: true },
-			Contract {
-				CreatedBy: "user1",
-				CreatedOn: "1504054225",
-				Details: "Test contract4",
-				Stage: "Contract Activation",
-				DocName: "contarct.pdf",
-				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
-				PartyList: []Party{
-						Party{Name: "user1", Mandatory: false, Signed: false, Weight: 1.0 },
-						Party{Name: "user2", Mandatory: true, Signed: false, Weight: 1.0 },
-					}, 
-				Condition: 2,
-				Progress: 0,
-				Validation: false },
-			Contract {
-				CreatedBy: "user1",
-				CreatedOn: "1504054225",
-				Details: "Test contract5",
+				CreatedOn: "1530540623",
+				Details: "Sample contract",
 				Stage: "Contract Validation",
 				DocName: "contarct.pdf",
 				DocHash: "96b26f6cc52edd91cd52ac5baa1a802f4ff04daab07a308f0b2e897cc807e4bb",
 				PartyList: []Party{
-						Party{Name: "user1", Mandatory: false, Signed: false, Weight: 1.0 },
-						Party{Name: "user2", Mandatory: true, Signed: false, Weight: 1.0 },
+						Party{Name: "user2", Mandatory: true, Signed: true, Weight: 1.0 },
+						Party{Name: "user3", Mandatory: false, Signed: true, Weight: 1.0 },
+						Party{Name: "user4", Mandatory: true, Signed: true, Weight: 1.0 },
 					},
 				HistoryList: []History{
-						History{User: "user1", Stage: "Contract Created", Timestamp:"1504054225", Details:"Created new contract"},
-						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User1 added"},
-						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User2 added"},
-						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User3 added"},
-						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Party User4 added"},
-						History{User: "user1", Stage: "Contract Activation", Timestamp:"1504054225", Details:"Document, condition and activation"},
-						History{User: "user1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User1 Signed"},
-						History{User: "user2", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User2 Signed"},
-						History{User: "user1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User3 Signed"},
-						History{User: "user1", Stage: "Contract Signing", Timestamp:"1504054225", Details:"User4 Signed"},
-						History{User: "SmartContract", Stage: "Contract Validation", Timestamp:"1504054225", Details:"Contarct Validated"},
+						History{Details:"New contract created",Stage:"Contract Created",Timestamp:"1530540623",User:"user1"},
+						History{Details:"Added Parties",Stage:"Contract Activation",Timestamp:"1530540725",User:"user1"},
+						History{Details:"Added Parties",Stage:"Contract Activation",Timestamp:"1530540750",User:"user1"},
+						History{Details:"Added Parties",Stage:"Contract Activation",Timestamp:"1530540756",User:"user1"},
+						History{Details:"Contarct Activated for signing",Stage:"Contract Activation",Timestamp:"1530540795",User:"user1"},
+						History{Details:"Document inforamtion added",Stage:"Contract Activation",Timestamp:"1530540795",User:"user1"},
+						History{Details:"Party not authorized",Stage:"Contract Signing",Timestamp:"1530540874",User:"user1"},
+						History{Details:"Mandatory condition not satisfied",Stage:"Contract Validation",Timestamp:"1530540874",User:"Smart Contract"},
+						History{Details:"Party Signed",Stage:"Contract Signing",Timestamp:"1530540889",User:"user2"},
+						History{Details:"Mandatory condition not satisfied",Stage:"Contract Validation",Timestamp:"1530540889",User:"Smart Contract"},
+						History{Details:"Party Signed",Stage:"Contract Signing",Timestamp:"1530540901",User:"user3"},
+						History{Details:"Mandatory condition not satisfied",Stage:"Contract Validation",Timestamp:"1530540901",User:"Smart Contract"},
+						History{Details:"Party Signed",Stage:"Contract Signing",Timestamp:"1530540917",User:"user4"},
+						History{Details:"Condition satisfied",Stage:"Contract Validation",Timestamp:"1530540917",User:"Smart Contract"},						
 					},	 
 				Condition: 2,
 				Progress: 3,
@@ -289,11 +249,11 @@ func (s *SmartContract) conAct(APIstub shim.ChaincodeStubInterface, args []strin
 
 	contract.DocHash = args[4] 
 
-	history1 := History{User: args[1], Stage: "Contract Activation", Timestamp: timestamp, Details: "Contarct Activated for signing" }
+	history1 := History{User: args[1], Stage: "Contract Activation", Timestamp: timestamp, Details: "Document information added" }
 
 	contract.HistoryList = append(contract.HistoryList, history1)
 
-	history2 := History{User: args[1], Stage: "Contract Activation", Timestamp: timestamp, Details: "Document inforamtion added" }
+	history2 := History{User: args[1], Stage: "Contract Activation", Timestamp: timestamp, Details: "Contract Activated for signing" }
 
 	contract.HistoryList = append(contract.HistoryList, history2)
 

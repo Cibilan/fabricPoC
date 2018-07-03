@@ -155,42 +155,9 @@
       </div>
   </md-toolbar>
 
-<!--Query All Contracts -->
-<md-card layout-padding>
-  <md-card-header>
-    <md-card-header-text>
-      <span class="md-title"> Query All Contracts</span>
-    </md-card-header-text>
-  <md-card-actions layout="row" layout-align="end center">
-    <md-button id="queryAllCon"  ng-click="queryAllCon()" class="md-raised md-primary md-hue-1"> Query </md-button>
-  </md-card-actions>  
-  </md-card-header>
-  <md-content>
-    <div ng-show="allcon">
-    <table id="all_con" class="table" align="center">
-
-        <tr>
-          <th>Contract ID</th>
-          <th>Created by</th>
-          <th>Created on</th>
-          <th>Details</th>
-          <th>Stage</th>
-        </tr>
-
-        <tr ng-repeat="con in all_con">
-          <td>{{con.Key}}</td>
-          <td>{{con.createdby}}</td>
-          <td>{{con.createdon * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
-          <td>{{con.details}}</td>
-          <td>{{con.stage}}</td>
-        </tr>
-      </table>
-    </div>
-  </md-content>
-</md-card>
 
 <!--Query Single Contracts -->
-<md-card flex md-theme="default">
+<md-card flex md-theme="default" ng-hide="conHome">
     <md-card-header>
     <md-card-header-text>
       <span class="md-title"> Get Contract Details</span>
@@ -210,7 +177,7 @@
   </md-card-actions>
   </md-card>  
 
-  <md-card flex>
+  <md-card flex ng-show="conDetail">
 
     <md-steppers md-selected="stepper.selected" md-stretch-steppers="always">
         <md-step label="Contract Created" md-complete="stepper.step1Completed">
@@ -369,8 +336,43 @@
     </md-steppers>
 
 </md-card>
+
+<!--Query All Contracts -->
+<md-card layout-padding ng-hide="conHome">
+  <md-card-header>
+    <md-card-header-text>
+      <span class="md-title"> Query All Contracts</span>
+    </md-card-header-text>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button id="queryAllCon"  ng-click="queryAllCon()" class="md-raised md-primary md-hue-1"> Query </md-button>
+  </md-card-actions>  
+  </md-card-header>
+  <md-content>
+    <div ng-show="allcon">
+    <table id="all_con" class="table" align="center">
+
+        <tr>
+          <th>Contract ID</th>
+          <th>Created by</th>
+          <th>Created on</th>
+          <th>Details</th>
+          <th>Stage</th>
+        </tr>
+
+        <tr ng-repeat="con in all_con">
+          <td>{{con.Key}}</td>
+          <td>{{con.createdby}}</td>
+          <td>{{con.createdon * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+          <td>{{con.details}}</td>
+          <td>{{con.stage}}</td>
+        </tr>
+      </table>
+    </div>
+  </md-content>
+</md-card>
+
 <!-- Contract Details-->
-<md-card>
+<md-card ng-show="conDetail">
   <md-card-header>
     <md-card-header-text>
       <span class="md-title"> Contract Details </span>
@@ -398,7 +400,7 @@
         <span>Created On</span>
       </md-card-title-text>
       <md-card-title-text> 
-        <span class="md-subhead"> {{con.createdon}} </span>
+        <span class="md-subhead"> {{con.createdon * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}} </span>
       </md-card-title-text>
   </md-card-title> 
 
@@ -495,7 +497,7 @@
 </md-card> -->
 
 <!-- Party List -->
-<md-card>
+<md-card ng-show="showParty">
   <md-card-header>
     <md-card-header-text>
       <span class="md-title"> Party List </span>      
@@ -521,7 +523,7 @@
  </md-card>
  
  <!-- Add Party -->
- <md-card>    
+ <md-card ng-show="showParty">    
     <md-card-header>
     <md-card-header-text>
       <span class="md-title"> Add Party </span>      
@@ -557,7 +559,7 @@
 
 <!-- Add Document and Activate-->
 
-<md-card>
+<md-card ng-show="showParty">
   <md-card-header>
     <md-card-header-text>
       <span class="md-title"> Add Document and Activate </span>      
@@ -591,7 +593,7 @@
 
 <!-- Party Signing-->
 
-<md-card>
+<md-card ng-show="showSign">
   <md-card-header>
     <md-card-header-text>
       <span class="md-title"> Sign the contract </span>      
@@ -614,25 +616,27 @@
             <p>{{ party.mandatory }}</p>
             <p>{{ party.signed }}</p>
             <p> {{ party.weight }} </p>
-            <md-checkbox ng-model="sign.selected" ></md-checkbox>
+            <md-checkbox ng-model="conSign.selected" ></md-checkbox>
           </md-list-item>
       </md-list>  
   </md-content>  
-  <md-card-actions layout="row" layout-align="space-between center">      
-      <p style="color:green;margin-bottom:2%" >  {{partySign_Success}} </p>
+
+    <md-card-actions layout="row" layout-align="end center">
+        
       <md-button ng-click="conSign()" class="md-raised md-primary md-hue-1"> Sign </md-button>
-  </md-card-actions>
+    </md-card-actions>
+
+    <h5 style="color:green;margin-bottom:2%" > {{partySign_Success}}</h5>
 
 </md-card>  
 
 </div>
 
-<div>
+<div ng-hide="conHome">
  <md-button class="md-fab md-fab-bottom-right docs-scroll-fab scrolling" docs-scroll-class="scrolling" ng-transclude="" aria-label="createOrder" ng-click="showPrompt($event)">
   <md-icon md-svg-src="img/icons/ic_add_white_48px.svg"></md-icon> 
   <md-tooltip>Create new Contract</md-tooltip> 
 </md-button>
-
 
 </div>   
 
