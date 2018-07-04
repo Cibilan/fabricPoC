@@ -46,6 +46,8 @@ chaincode
 
 	docker exec -it cli bash
 
+	docker logs -f peer 
+
 	peer chaincode install -p chaincodedev/chaincode/mycontract -n mycc -v 0
 	peer chaincode instantiate -n mycc -v 0 -c '{"Args":[""]}' -C myc
 
